@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BBUBTB111P16Y4S1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/blue500</item>
+        <item name="colorPrimaryDark">@color/blue700</item>
+    </style>
+
+    <style name="Theme.BBUBTB111P16Y4S1" parent="Base.Theme.BBUBTB111P16Y4S1" />
+
+    <style name="BBUBTB111P16Y4S1_NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/blue500</item>
+        <item name="colorPrimaryDark">@color/blue700</item>
+    </style>
+</resources>

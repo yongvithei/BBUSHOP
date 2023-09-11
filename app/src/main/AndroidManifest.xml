@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.BBUBTB111P16Y4S1"
+        tools:targetApi="31">
+        <activity
+            android:name=".ContactDetailActivity"
+            android:label="Contact Detail"
+            android:parentActivityName=".ContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ContactActivity"
+            android:exported="false"
+            android:label="Contacts"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CategoryActivity"
+            android:exported="false"
+            android:label="Categories"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ProductActivity"
+            android:exported="false"
+            android:label="Products"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".RecentViewsActivity"
+            android:exported="false"
+            android:label="Recent Views"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".PopularItemsActivity"
+            android:exported="false"
+            android:label="Polpular Items"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FavoriteItemsActivity"
+            android:exported="false"
+            android:label="Favorite Items"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NewOrderActivity"
+            android:exported="false"
+            android:label="New Order"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="BBU STORE"
+            android:theme="@style/BBUBTB111P16Y4S1_NoActionBar" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false"
+            android:label="Sign Up User"
+            android:parentActivityName=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:label="Login User">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false"/>
+    </application>
+
+</manifest>
