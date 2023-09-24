@@ -3,35 +3,20 @@ package com.bbubtb111p16y4s1;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.bbubtb111p16y4s1.functions.ProgressBarDialog;
+import com.bbubtb111p16y4s1.functions.RequestHelper;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     TextInputEditText txtfullname, txtusername, txtpassword, txtconfirmpwd;
     Button btnregister;
     ProgressBarDialog dialog;
-    StringBuffer result;
+    String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,39 +79,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     });
                     // doInBackground
-                    try {
-                        String strUri = "http://10.0.2.2/BTB111/register_user.php";
-                        // creating HttpClient
-                        HttpClient client = new DefaultHttpClient();
-                        // creating HttpPost
-                        HttpPost post = new HttpPost(strUri);
 
-                        // building post parameters
-                        List<NameValuePair> param = new ArrayList<NameValuePair>();
-                        param.add(new BasicNameValuePair("FullNameRegister", strfullName));
-                        param.add(new BasicNameValuePair("UserNameRegister", struserName));
-                        param.add(new BasicNameValuePair("PasswordRegister", strpassword));
+                        String strUri = getText(R.string.AppURL)+ "register_user.php";
+                        String[] params={"FullNameRegister","UserNameRegister","PasswordRegister"};
+                        String[] values={strfullName,struserName,strpassword};
+                        RequestHelper signup=new RequestHelper();
+                        result = signup.Execute(strUri,params,values);
 
-                        // URL Encoding post data
-                        post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
 
-                        // finally making Http Requests
-                        HttpResponse response = client.execute(post);
-                        // write response to log
-                        Log.d("HttpResponse", response.toString());
-
-                        // read data sent from server
-                        InputStream is = response.getEntity().getContent();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                        String line = "";
-                        result = new StringBuffer();
-                        while((line = reader.readLine()) != null){
-                            result.append(line + "\n");
-                        }
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                    // PostExecute
+                   //post execute
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

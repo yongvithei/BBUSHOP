@@ -2,4 +2,5 @@
     <string name="app_name">BBUBTB111P16Y4S1</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <string name="AppURL">http://192.168.43.79/BTB111/</string>
 </resources>
