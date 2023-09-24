@@ -61,9 +61,15 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="BBU STORE"
-            android:theme="@style/BBUBTB111P16Y4S1_NoActionBar" />
+            android:theme="@style/BBUBTB111P16Y4S1_NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
@@ -71,14 +77,8 @@
             android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"
-            android:label="Login User">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:label="Login User"/>
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false"/>

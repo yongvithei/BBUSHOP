@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bbubtb111p16y4s1.functions.ProgressBarDialog;
 import com.bbubtb111p16y4s1.functions.RequestHelper;
+import com.bbubtb111p16y4s1.functions.Sessions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,6 +91,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 try {
                                     JSONObject object = new JSONObject(result.toString());
                                     if(object.getInt("success")==1){
+                                        //save user login info
+                                        Sessions sessions=new Sessions(LoginActivity.this);
+                                        sessions.setUserID(object.getInt("UserID"));
+                                        sessions.setUserName(object.getString("UserName"));
+                                        sessions.setUserPassword(object.getString("UserPassword"));
+                                        sessions.setUserFullName(object.getString("UserFullname"));
+                                        sessions.setUserType(object.getString("UserType"));
+                                        sessions.setUserEmail(object.getString("UserEmail"));
+                                        sessions.setUserImage(object.getString("UserImage"));
                                         Toast.makeText(LoginActivity.this,
                                                 object.getString("msg_success"),
                                                 Toast.LENGTH_LONG).show();

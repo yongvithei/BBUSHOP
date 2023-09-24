@@ -8,19 +8,28 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.bbubtb111p16y4s1.functions.ConvertImage;
+import com.bbubtb111p16y4s1.functions.Sessions;
 import com.google.android.material.navigation.NavigationView;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
+    Sessions sessions;
+    Bitmap bitmap;
+    CircularImageView imgProfilePhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //create session
+        sessions = new Sessions(this);
         setContentView(R.layout.main_app_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbarID);
         setSupportActionBar(toolbar);
@@ -32,6 +41,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView nav = findViewById(R.id.navigationID);
         nav.setNavigationItemSelectedListener(this);
+        TextView tvnameLogin=findViewById(R.id.tvUserNameLogin);
+        tvnameLogin.setText(sessions.getUserFullName());
+        View v=nav.getHeaderView(0);
+        TextView tvname=v.findViewById(R.id.tvLoginName);
+        tvname.setText(sessions.getUserFullName());
+        TextView tvemail=v.findViewById(R.id.tvLoginEmail);
+        tvemail.setText(sessions.getUserEmail());
+
+        bitmap = ConvertImage.StringToImage(sessions.getUserImage());
+        imgProfilePhoto=v.findViewById(R.id.imgHeaderMenuPhoto);
+        imgProfilePhoto.setImageBitmap(bitmap);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(sessions.getUserName().equals("") && sessions.getUserPassword().equals("")) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finishAffinity();
+        }
     }
 
     @Override
@@ -71,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(id == R.id.mnContacts){
             Intent in = new Intent(MainActivity.this, ContactActivity.class);
             startActivity(in);
+        }else if(id == R.id.mnLogout){
+            sessions.ClearSession();
+            Intent in = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(in);
+            finishAffinity();
         }
         return true;
     }
