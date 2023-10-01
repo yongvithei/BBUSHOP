@@ -95,9 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.mnProducts){
             Intent in = new Intent(MainActivity.this, ProductActivity.class);
             startActivity(in);
-        }else if(id == R.id.mnCategories){
-            Intent in = new Intent(MainActivity.this, CategoryActivity.class);
-            startActivity(in);
         }else if(id == R.id.mnContacts){
             Intent in = new Intent(MainActivity.this, ContactActivity.class);
             startActivity(in);
@@ -106,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent in = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(in);
             finishAffinity();
+        }else if(id==R.id.mnEditProfile){
+            Intent in = new Intent(MainActivity.this, EditProfileActivity.class);
+            startActivity(in);
+        } else if(id==R.id.mnCategories){
+            Intent in = new Intent(MainActivity.this, AddCategoryActivity.class);
+            startActivity(in);
         }
         return true;
     }
