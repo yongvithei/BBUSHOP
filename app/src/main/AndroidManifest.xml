@@ -21,11 +21,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AddContactActivity"
+            android:exported="false"
+            android:label="Add Contact"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".AddCategoryActivity"
             android:exported="false"
             android:label="Add Category"
-            android:parentActivityName=".MainActivity"
-            />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditProfileActivity"
             android:exported="false"

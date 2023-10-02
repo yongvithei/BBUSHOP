@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class ContactActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     List<ContactModel> lstContact = new ArrayList<ContactModel>();
+    Button btnAdd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,18 @@ public class ContactActivity extends AppCompatActivity implements AdapterView.On
         LV.setAdapter(adapter);
         LV.setOnItemClickListener(this);
         LV.setOnItemLongClickListener(this);
+
+        // Find the button by its ID
+        Button btnAdd = findViewById(R.id.btnAdd);
+        // Set an OnClickListener for the button
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create an Intent to navigate to SecondActivity
+                Intent intent = new Intent(ContactActivity.this, AddContactActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
