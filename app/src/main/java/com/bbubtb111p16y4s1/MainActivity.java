@@ -109,7 +109,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if(id==R.id.mnCategories){
             Intent in = new Intent(MainActivity.this, AddCategoryActivity.class);
             startActivity(in);
-        }
+        } else if(id==R.id.mnChangePassword){
+            Intent in = new Intent(MainActivity.this, CurrentPasswordActivity.class);
+            startActivity(in);
+    }
         return true;
     }
 

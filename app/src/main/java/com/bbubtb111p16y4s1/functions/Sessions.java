@@ -20,8 +20,8 @@ public class Sessions {
     public void setUserName(String userName){
         sp.edit().putString("USER_NAME",userName).commit();
     }
-    public void setUserPassword(String userName){
-        sp.edit().putString("USER_PASSWORD",userName).commit();
+    public void setUserPassword(String userPassword){
+        sp.edit().putString("USER_PASSWORD",userPassword).commit();
     }
     public void setUserFullName(String userFullName){
         sp.edit().putString("FULL_NAME",userFullName).commit();
