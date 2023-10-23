@@ -41,6 +41,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     ImageButton btnBrowse;
     Bitmap bitmap;
     ProgressBarDialog dialog;
+    boolean isChange = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +91,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                             Intent data = result.getData();
                             bitmap = (Bitmap) data.getExtras().get("data");
                             imgProfilePhoto.setImageBitmap(bitmap);
+                            isChange=true;
                         }catch (Exception ex){
                             ex.printStackTrace();
 
@@ -114,6 +116,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                             Uri uri= data.getData();
                             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                             imgProfilePhoto.setImageBitmap(bitmap);
+                            isChange = true;
                         }catch (Exception ex){
                             ex.printStackTrace();
 
@@ -135,7 +138,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         String strfullname = txtFullName.getText().toString();
         String strusername = txtUserName.getText().toString().trim();
         String stremail = txtEmail.getText().toString();
-        String strimage= ConvertImage.ImageToString(bitmap);
+
         String strId= String.valueOf(sessions.getUserID());
             if(TextUtils.isEmpty(strfullname)){
                 txtFullName.setError("Required Name");
@@ -167,6 +170,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
                     //doInBackground
+                    String strimage= "NoChange";
+                    if(isChange==true){
+                        strimage= ConvertImage.ImageToString(bitmap);
+                    }
                     String strUri=getText(R.string.AppURL).toString()+ "edit_user_profile.php";
                     String[] params= {"UserFullName","UserName","UserEmail","UserImage","UserID"};
                     String[] values = {strfullname, strusername, stremail, strimage ,strId };
@@ -186,7 +193,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                                     sessions.setUserFullName(object.getString("UserFullName"));
                                     sessions.setUserEmail(object.getString("UserEmail"));
                                     sessions.setUserImage(object.getString("UserName"));
-                                    sessions.setUserImage(object.getString("UserImage"));
+                                    if(object.getString("UserImage") != "NoChange"){
+                                        sessions.setUserImage(object.getString("UserImage"));
+                                    }
                                     Toast.makeText(EditProfileActivity.this,
                                             object.getString("msg_success"), Toast.LENGTH_LONG).show();
                                 }else {
