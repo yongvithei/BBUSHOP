@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.bbubtb111p16y4s1.R;
 import com.bbubtb111p16y4s1.models.ContactModel;
+import com.bumptech.glide.Glide;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
@@ -44,10 +46,11 @@ public class ContactAdapter extends BaseAdapter {
         View v = convertView.inflate(context, R.layout.contact_model, null);
 
         ContactModel contact = lstContact.get(position);
-        ImageView img = v.findViewById(R.id.imgContactModel);
-        img.setImageResource(contact.getImageID());
-        img.setTag(String.valueOf(contact.getImageID()));
+        CircularImageView img = v.findViewById(R.id.imgContactModel);
+//        img.setImageResource(contact.getImageID());
+//        img.setTag(String.valueOf(contact.getImageID()));
 
+        Glide.with(context).load(contact.getImageURL()).into(img);
         TextView tvname = v.findViewById(R.id.tvContactModel);
         tvname.setText(contact.getContactName());
 

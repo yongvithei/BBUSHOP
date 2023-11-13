@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bitmap = ConvertImage.StringToImage(sessions.getUserImage());
         imgProfilePhoto=v.findViewById(R.id.imgHeaderMenuPhoto);
         imgProfilePhoto.setImageBitmap(bitmap);
+
+        CircularImageView img=findViewById(R.id.img_main_profile);
+        img.setImageBitmap(bitmap);
     }
 
     @Override
