@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bbubtb111p16y4s1.R;
@@ -47,8 +46,7 @@ public class ContactAdapter extends BaseAdapter {
 
         ContactModel contact = lstContact.get(position);
         CircularImageView img = v.findViewById(R.id.imgContactModel);
-//        img.setImageResource(contact.getImageID());
-//        img.setTag(String.valueOf(contact.getImageID()));
+        img.setTag(contact.getImageURL());
 
         Glide.with(context).load(contact.getImageURL()).into(img);
         TextView tvname = v.findViewById(R.id.tvContactModel);
@@ -56,6 +54,14 @@ public class ContactAdapter extends BaseAdapter {
 
         TextView tvphone = v.findViewById(R.id.tvPhoneModel);
         tvphone.setText(contact.getPhoneNumber());
+
+        TextView tvemail = v.findViewById(R.id.tvEmail);
+        tvemail.setText(contact.getEmail());
+
+        TextView tvid = v.findViewById(R.id.tvId);
+        tvid.setText(contact.getId());
+
+
 
         return v;
     }

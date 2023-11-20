@@ -7,7 +7,23 @@
     android:padding="16dp"
     tools:context=".ContactDetailActivity">
 
-    <ImageView
+    <TextView
+        android:id="@+id/tvEmailContactDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Showemail"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhoneDetail" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/imgContactDetail"
         android:layout_width="150dp"
         android:layout_height="150dp"

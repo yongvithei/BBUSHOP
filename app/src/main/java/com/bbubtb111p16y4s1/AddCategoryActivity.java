@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bbubtb111p16y4s1.functions.ProgressBarDialog;
 import com.bbubtb111p16y4s1.functions.RequestHelper;
+import com.bbubtb111p16y4s1.functions.Sessions;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -27,10 +28,12 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
     Button btnsavecategory;
     ProgressBarDialog dialog;
     String result;
+    Sessions sessions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_category_layout);
+        sessions = new Sessions(this);
         txtCategoryName = findViewById(R.id.txtCategoryName);
         txtDescription = findViewById(R.id.txtDescription);
         btnsavecategory = findViewById(R.id.btnSaveCategory);
@@ -39,7 +42,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-                String strCategoryName = txtCategoryName.getText().toString().trim();
+        String strCategoryName = txtCategoryName.getText().toString().trim();
         String strDescription = txtDescription.getText().toString().trim();
 
         if(TextUtils.isEmpty(strCategoryName)){
@@ -59,6 +62,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
             service.execute(new Runnable() {
                 @Override
                 public void run() {
+                    //pre execute
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -69,8 +73,8 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
                     });
                     //doInBackground
                     String strUri = getText(R.string.AppURL)+ "create_category.php";
-                    String[] params={"CategoryName","Description"};
-                    String[] values={strCategoryName,strDescription};
+                    String[] params={"CategoryName","Description","CreateBy"};
+                    String[] values={strCategoryName,strDescription,sessions.getUserName()};
                     RequestHelper create=new RequestHelper();
                     result = create.Execute(strUri,params,values);
                     //post execute

@@ -17,12 +17,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bbubtb111p16y4s1.functions.ConvertImage;
 import com.bbubtb111p16y4s1.functions.ProgressBarDialog;
 import com.bbubtb111p16y4s1.functions.RequestHelper;
-import com.bbubtb111p16y4s1.functions.Sessions;
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -32,35 +34,49 @@ import org.json.JSONObject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AddContactActivity extends AppCompatActivity implements View.OnClickListener {
-    TextInputEditText txtName,txtPhone,txtEmail;
-    CircularImageView imgPhoto;
-    Button btnCreate;
+public class EditContactActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton btnBrowse;
     Bitmap bitmap;
-    Sessions sessions;
+    CircularImageView imgContactPhoto;
+    boolean isChange = false;
+    Button btnUpdate;
     ProgressBarDialog dialog;
+    TextInputEditText txtContactName,txtContactNumber,txtContactEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_contact_layout);
-        txtName = findViewById(R.id.txtEditContactName);
-        txtPhone = findViewById(R.id.txtEditPhoneNumber);
-        txtEmail = findViewById(R.id.txtEditContactEmail);
-        btnCreate = findViewById(R.id.btnCreate);
-        btnCreate.setOnClickListener(this);
-        bitmap = ConvertImage.StringToImage(null);
+        setContentView(R.layout.edit_contact_layout);
+
+        String strName = getIntent().getStringExtra("CONTACT_NAME");
+        String strPhone = getIntent().getStringExtra("CONTACT_PHONE");
+        String strImage = getIntent().getStringExtra("CONTACT_IMAGE");
+        String strEmail = getIntent().getStringExtra("CONTACT_EMAIL");
+
+        imgContactPhoto = findViewById(R.id.imgContactPhoto);
+        Glide.with(this).load(strImage).into(imgContactPhoto);
+
+        txtContactName = findViewById(R.id.txtEditContactName);
+        txtContactName.setText(strName);
+
+        txtContactNumber = findViewById(R.id.txtEditPhoneNumber);
+        txtContactNumber.setText(strPhone);
+
+        txtContactEmail = findViewById(R.id.txtEditContactEmail);
+        txtContactEmail.setText(strEmail);
 
 
-        imgPhoto=findViewById(R.id.imgContactPhoto);
 
 
         btnBrowse=findViewById(R.id.btnBrowsePhoto);
+
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnUpdate.setOnClickListener(this);
         btnBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String[] options ={"From Gallery","Take a photo"};
-                AlertDialog.Builder ad = new AlertDialog.Builder(AddContactActivity.this);
+                AlertDialog.Builder ad = new AlertDialog.Builder(EditContactActivity.this);
                 ad.setTitle("Please choose");
                 ad.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
@@ -76,6 +92,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
     ActivityResultLauncher<Intent> takePhoto= registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -84,7 +101,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                         try {
                             Intent data = result.getData();
                             bitmap = (Bitmap) data.getExtras().get("data");
-                            imgPhoto.setImageBitmap(bitmap);
+                            imgContactPhoto.setImageBitmap(bitmap);
+                            isChange=true;
                         }catch (Exception ex){
                             ex.printStackTrace();
 
@@ -108,7 +126,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                             Intent data = result.getData();
                             Uri uri= data.getData();
                             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-                            imgPhoto.setImageBitmap(bitmap);
+                            imgContactPhoto.setImageBitmap(bitmap);
+                            isChange = true;
                         }catch (Exception ex){
                             ex.printStackTrace();
 
@@ -125,25 +144,28 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+
     @Override
     public void onClick(View view) {
-        String strContactName = txtName.getText().toString();
-        String strPhoneNumber = txtPhone.getText().toString().trim();
-        String strEmail = txtEmail.getText().toString();
-        String strimage= ConvertImage.ImageToString(bitmap);
-        if(TextUtils.isEmpty(strContactName)){
-            txtName.setError("Required Name");
-            txtName.requestFocus();
+        String strName = txtContactName.getText().toString();
+        String strNumber = txtContactNumber.getText().toString().trim();
+        String strEmail = txtContactEmail.getText().toString();
+
+        String strId = getIntent().getStringExtra("CONTACT_ID");
+
+        if(TextUtils.isEmpty(strName)){
+            txtContactName.setError("Required Name");
+            txtContactName.requestFocus();
             return;
         }
-        if(TextUtils.isEmpty(strPhoneNumber)){
-            txtPhone.setError("Required Phone");
-            txtPhone.requestFocus();
+        if(TextUtils.isEmpty(strNumber)){
+            txtContactNumber.setError("Required Phone Number");
+            txtContactNumber.requestFocus();
             return;
         }
         if(TextUtils.isEmpty(strEmail)){
-            txtEmail.setError("Required Email");
-            txtEmail.requestFocus();
+            txtContactEmail.setError("Required Email");
+            txtContactEmail.requestFocus();
             return;
         }
         ExecutorService service = Executors.newSingleThreadExecutor();
@@ -154,15 +176,19 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        dialog = new ProgressBarDialog(AddContactActivity.this);
-                        dialog.setMessage(("Create"));
+                        dialog = new ProgressBarDialog(EditContactActivity.this);
+                        dialog.setMessage(("Updating"));
                         dialog.show();
                     }
                 });
                 //doInBackground
-                String strUri=getText(R.string.AppURL).toString()+ "create_contact.php";
-                String[] params= {"ContactName","UserPhone","UserEmail","UserImage"};
-                String[] values = {strContactName, strPhoneNumber, strEmail, strimage };
+                String strimage= "NoChange";
+                if(isChange==true){
+                    strimage= ConvertImage.ImageToString(bitmap);
+                }
+                String strUri=getText(R.string.AppURL).toString()+ "edit_contact.php";
+                String[] params= {"ContactName","ContactPhone","ContactEmail","ContactImage","ContactID"};
+                String[] values = {strName, strNumber, strEmail, strimage ,strId };
                 RequestHelper update= new RequestHelper();
                 String result = update.Execute(strUri,params,values);
                 //postExecute
@@ -170,15 +196,19 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void run() {
                         dialog.close();
-                         //new AlertDialog.Builder(AddContactActivity.this).setMessage(result).show();
+                        // new AlertDialog.Builder(EditContactActivity.this).setMessage(result).show();
                         try{
                             JSONObject object = new JSONObject(result);
                             if(object.getInt("success")==1){
 
-                                Toast.makeText(AddContactActivity.this,
+                                Toast.makeText(EditContactActivity.this,
                                         object.getString("msg_success"), Toast.LENGTH_LONG).show();
+                                // go to
+                                Intent intent = new Intent(EditContactActivity.this,ContactActivity.class);
+                                startActivity(intent);
+                                finish();
                             }else {
-                                Toast.makeText(AddContactActivity.this,
+                                Toast.makeText(EditContactActivity.this,
                                         object.getString("msg_errors"), Toast.LENGTH_LONG).show();
                             }
 

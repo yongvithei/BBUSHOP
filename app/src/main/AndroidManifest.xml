@@ -21,6 +21,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".EditContactActivity"
+            android:exported="false"
+            android:label="Edit Contact"
+            android:parentActivityName=".ContactActivity" />
+        <activity
             android:name=".NewPasswordActivity"
             android:exported="false"
             android:label="New Password"
@@ -34,7 +39,7 @@
             android:name=".AddContactActivity"
             android:exported="false"
             android:label="Add Contact"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ContactActivity" />
         <activity
             android:name=".AddCategoryActivity"
             android:exported="false"
@@ -44,7 +49,7 @@
             android:name=".EditProfileActivity"
             android:exported="false"
             android:label="Edit Profile"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ContactActivity" />
         <activity
             android:name=".ContactDetailActivity"
             android:exported="false"

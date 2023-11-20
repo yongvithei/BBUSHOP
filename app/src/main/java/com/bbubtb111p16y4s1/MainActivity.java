@@ -131,4 +131,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent in = new Intent(MainActivity.this, ContactActivity.class);
         startActivity(in);
     }
+    public void ViewCategory(View v){
+        Intent in = new Intent(MainActivity.this, CategoryActivity.class);
+        startActivity(in);
+    }
+
 }
