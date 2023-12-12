@@ -1,10 +1,10 @@
 <?php
     include('functions.php');
     $result = array("success"=>0,"error"=>0);
-    if(isset($_POST["CategoryName"]) && isset($_POST["CreatBy"])){
+    if(isset($_POST["CategoryName"]) && isset($_POST["Description"])){
         $categoryName = $_POST["CategoryName"];
         $description = $_POST["Description"];
-        $createBy = $_POST["CreateBy"];
+        $createBy = "vithei";
         $fields = array("CategoryName","Description","CreateBy");
         $values = array($categoryName,$description,$createBy);
 

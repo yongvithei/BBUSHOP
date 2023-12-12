@@ -90,28 +90,6 @@
             }
 
         }
-        public function show_data_by_id($tablename,$fid,$vid){
-            $this->sql="SELECT * FROM $tablename WHERE $fid='$vid'";
-            $this->result=mysqli_query($this->db->connect(),$this->sql);
-            if($this->result){
-                return mysqli_fetch_assoc($this->result);
-            }else{
-                return false;
-            }
-        }
-        public function show_all_data($tablename,$tag){
-            $data = array();
-            $this->sql="SELECT * FROM $tablename;";
-            $this->result= mysqli_query($this->db->connect(),$this->sql);
-            if($this->result){
-                while($row = mysqli_fetch_assoc($this->result)){
-                    $data[$tag][]=$row;
-                };
-                print json_encode($data);
-            }else{
-                return false;
-            }
-        }
         public function delete_data($tablename, $fid, $vid){
             $vid = mysqli_real_escape_string($this->db->connect(), $vid);
             $this->sql = "DELETE FROM $tablename WHERE $fid = '$vid';";
@@ -123,7 +101,6 @@
                 return false;
             }
         }
-        
         
         
     }

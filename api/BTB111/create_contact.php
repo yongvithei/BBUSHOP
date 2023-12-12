@@ -5,7 +5,7 @@
         $contactName = $_POST["ContactName"];
         $phone = $_POST["UserPhone"];
         $email = $_POST["UserEmail"];
-        $favorites = "0";
+        $favorites = "1";
         $image = $_POST['UserImage'];
         $image_name = $contactName.".jpg";
         $path = "images/" .$image_name;
