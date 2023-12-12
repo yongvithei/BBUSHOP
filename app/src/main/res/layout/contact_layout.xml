@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnAddPro"
         android:layout_width="104dp"
         android:layout_height="55dp"
         android:layout_marginEnd="16dp"

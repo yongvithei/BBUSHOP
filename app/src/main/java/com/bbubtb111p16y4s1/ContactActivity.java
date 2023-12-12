@@ -96,7 +96,7 @@ public class ContactActivity extends AppCompatActivity implements AdapterView.On
 
 
         // Find the button by its ID
-        Button btnAdd = findViewById(R.id.btnAdd);
+        Button btnAdd = findViewById(R.id.btnAddPro);
         // Set an OnClickListener for the button
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

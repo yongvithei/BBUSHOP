@@ -175,8 +175,14 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                             JSONObject object = new JSONObject(result);
                             if(object.getInt("success")==1){
 
+
                                 Toast.makeText(AddContactActivity.this,
                                         object.getString("msg_success"), Toast.LENGTH_LONG).show();
+
+                                // go to
+                                Intent intent = new Intent(AddContactActivity.this,ContactActivity.class);
+                                startActivity(intent);
+                                finish();
                             }else {
                                 Toast.makeText(AddContactActivity.this,
                                         object.getString("msg_errors"), Toast.LENGTH_LONG).show();
